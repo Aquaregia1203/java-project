@@ -22,13 +22,13 @@ public class LinkedList<T> implements Serializable {
 
         StringBuffer sb = new StringBuffer();
         while (pointer.getNext() != null) {
-            sb.append(this.head.getValue().toString())
+            sb.append(pointer.getValue().toString())
               .append(" / ");
 
             pointer = pointer.getNext();
         }
 
-        sb.append(this.head.getValue().toString());
+        sb.append(pointer.getValue().toString());
 
         return sb.toString();
     }
@@ -46,6 +46,76 @@ public class LinkedList<T> implements Serializable {
             pointer.setNext(new Node(element, null));
         }
     }
+
+    //TODO:
+    public void add(int index, T element) {
+        Node pointer = head;
+        Node newElement = null;
+
+        for (int i = 0; i < index - 2; i++) {
+            pointer = pointer.getNext();
+
+            if (pointer == null) {
+                throw new IndexOutOfBoundsException();
+            }
+        }
+
+        pointer = pointer.getNext();
+
+        if (pointer.getNext() != null) {
+            pointer.setNext(new Node(element, pointer.getNext()));
+        } else {
+            pointer.setNext(new Node(element, null));
+        }
+    }
+
+    public T get(int index) {
+        Node pointer = head;
+
+        for (int i = 0; i < index; i++) {
+            pointer = pointer.getNext();
+
+            if (pointer == null) {
+                throw new IndexOutOfBoundsException();
+            }
+        }
+
+        T value = (T) pointer.getValue();
+
+        return value;
+    }
+
+    //TODO: 삭제
+    public void delete(T element) {
+        Node pointer = head;
+
+        if (head == null) {
+            return;
+        } else if (head.getValue() == element) {
+            Node newNode = new Node(element, head.getNext());
+
+            head = newNode;
+        }
+
+        Node beforePointer = null;
+        while (pointer.getNext() != null){
+            Node temp = pointer.getNext();
+            beforePointer = pointer;
+
+            if (pointer.getValue() == element) {
+                pointer.setNext(temp.getNext());
+            }
+
+            pointer = pointer.getNext();
+        }
+
+        if (pointer.getValue() == element) {
+            beforePointer.setNext(null);
+        }
+    }
+
+    //TODO: 길이 측정
+
 
     class Node<T> {
         private T value;
