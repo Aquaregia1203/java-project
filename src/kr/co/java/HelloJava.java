@@ -9,13 +9,11 @@ public class HelloJava implements Serializable {
 
         linkedList.add(1);
         linkedList.add(2);
-        linkedList.add(2);
         linkedList.add(3);
         linkedList.add(4);
-        linkedList.add(5);
 
-        linkedList.delete(1);
-        //linkedList.add(0, 6);
+        //linkedList.delete(1);
+        linkedList.add(1, 6);
 
         String msg = linkedList.printAll();
 

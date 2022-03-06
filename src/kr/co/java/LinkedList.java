@@ -23,7 +23,7 @@ public class LinkedList<T> implements Serializable {
         StringBuffer sb = new StringBuffer();
         while (pointer.getNext() != null) {
             sb.append(pointer.getValue().toString())
-              .append(" / ");
+                    .append(" / ");
 
             pointer = pointer.getNext();
         }
@@ -47,25 +47,26 @@ public class LinkedList<T> implements Serializable {
         }
     }
 
-    //TODO:
     public void add(int index, T element) {
         Node pointer = head;
-        Node newElement = null;
 
-        for (int i = 0; i < index - 2; i++) {
-            pointer = pointer.getNext();
+        if (index == 0) {
+            head = new Node(element, pointer);
+        } else {
+            for (int i = 0; i < index - 1; i++) {
+                if (pointer == null) {
+                    throw new IndexOutOfBoundsException();
+                }
+
+                pointer = pointer.getNext();
+            }
 
             if (pointer == null) {
                 throw new IndexOutOfBoundsException();
             }
-        }
 
-        pointer = pointer.getNext();
-
-        if (pointer.getNext() != null) {
-            pointer.setNext(new Node(element, pointer.getNext()));
-        } else {
-            pointer.setNext(new Node(element, null));
+            Node nextPointer = pointer.getNext();
+            pointer.setNext(new Node(element, nextPointer));
         }
     }
 
