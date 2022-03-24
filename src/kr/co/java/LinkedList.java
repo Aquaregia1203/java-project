@@ -86,37 +86,55 @@ public class LinkedList<T> implements Serializable {
         return value;
     }
 
-    //TODO: 삭제
-    public void delete(T element) {
-        Node pointer = head;
+    //TODO: 인덱스로 삭제
 
-        if (head == null) {
-            return;
-        } else if (head.getValue() == element) {
-            Node newNode = new Node(element, head.getNext());
+    //TODO: 삭제처리
+    public boolean delete(T element) {
+        Node pointer = this.head;
 
-            head = newNode;
+        if (pointer == null) {
+            return false;
+        } else if (pointer.getValue() == element) {
+            Node newNode = new Node(element, pointer.getNext());
+            this.head = newNode;
+
+            return true;
         }
 
         Node beforePointer = null;
         while (pointer.getNext() != null){
-            Node temp = pointer.getNext();
             beforePointer = pointer;
+            pointer = pointer.getNext();
 
             if (pointer.getValue() == element) {
-                pointer.setNext(temp.getNext());
+                beforePointer.setNext(pointer.getNext());
+                return true;
             }
-
-            pointer = pointer.getNext();
         }
 
         if (pointer.getValue() == element) {
             beforePointer.setNext(null);
+            return true;
         }
+
+        return false;
     }
 
-    //TODO: 길이 측정
+    public int size() {
+        Node pointer = this.head;
 
+        if (pointer == null) {
+            return 0;
+        }
+
+        int size = 1;
+        while (pointer.getNext() != null) {
+            pointer = pointer.getNext();
+            size++;
+        }
+
+        return size;
+    }
 
     class Node<T> {
         private T value;
