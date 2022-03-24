@@ -87,16 +87,19 @@ public class LinkedList<T> implements Serializable {
     }
 
     //TODO: 인덱스로 삭제
+    public boolean delete(int index) {
 
-    //TODO: 삭제처리
+
+        return false;
+    }
+
     public boolean delete(T element) {
         Node pointer = this.head;
 
         if (pointer == null) {
             return false;
         } else if (pointer.getValue() == element) {
-            Node newNode = new Node(element, pointer.getNext());
-            this.head = newNode;
+            this.head = pointer.getNext();
 
             return true;
         }
