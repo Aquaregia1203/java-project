@@ -53,7 +53,7 @@ public class LinkedList<T> implements Serializable {
         if (index == 0) {
             head = new Node(element, pointer);
         } else {
-            for (int i = 0; i < index - 1; i++) {
+            for (int i = 1; i < index; i++) {
                 if (pointer == null) {
                     throw new IndexOutOfBoundsException();
                 }
@@ -86,11 +86,33 @@ public class LinkedList<T> implements Serializable {
         return value;
     }
 
-    //TODO: 인덱스로 삭제
-    public boolean delete(int index) {
+    public void delete(int index) {
+        Node pointer = head;
 
+        if (index == 0) {
+            if (pointer == null) {
+                throw new IndexOutOfBoundsException();
+            } else {
+                this.head = pointer.getNext();
+            }
+        } else {
+            Node beforePointer = null;
 
-        return false;
+            for (int i = 0; i < index; i++) {
+                if (pointer == null) {
+                    throw new IndexOutOfBoundsException();
+                }
+
+                beforePointer = pointer;
+                pointer = pointer.getNext();
+            }
+
+            if (pointer == null) {
+                throw new IndexOutOfBoundsException();
+            }
+
+            beforePointer.setNext(pointer.getNext());
+        }
     }
 
     public boolean delete(T element) {
@@ -139,7 +161,31 @@ public class LinkedList<T> implements Serializable {
         return size;
     }
 
-    class Node<T> {
+    public int indexOf(T element) {
+        Node pointer = this.head;
+        int count = 0;
+
+        if (pointer == null) {
+            return -1;
+        }
+
+        while (pointer.getNext() != null) {
+            if (pointer.getValue() == element) {
+                return count;
+            }
+
+            count++;
+            pointer = pointer.getNext();
+        }
+
+        if (pointer.getValue() == element) {
+            return  count;
+        }
+
+        return -1;
+    }
+
+    private class Node<T> {
         private T value;
         private Node next;
 
